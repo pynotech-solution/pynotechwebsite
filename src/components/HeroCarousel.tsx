@@ -62,7 +62,7 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative h-[70vh] min-h-[26rem] w-full overflow-hidden bg-foreground"
+      className="group relative h-[70vh] min-h-[26rem] w-screen max-w-[100vw] overflow-hidden bg-foreground"
       aria-roledescription="carousel"
       aria-label="Pynotech Solutions highlights"
     >
@@ -85,7 +85,7 @@ export function HeroCarousel() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-foreground/20" />
           <div className="absolute inset-0 flex items-center">
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full max-w-[110rem] px-6 sm:px-10 lg:px-16">
               <div className="max-w-2xl text-background">
                 <span className="inline-flex items-center rounded-full border border-background/30 bg-background/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
                   {slide.eyebrow}
@@ -112,7 +112,7 @@ export function HeroCarousel() {
         type="button"
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-background/30 bg-foreground/40 p-2 text-background backdrop-blur transition-colors hover:bg-foreground/70 sm:left-6"
+        className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-background/30 bg-foreground/40 p-2 text-background opacity-0 backdrop-blur transition-all duration-300 hover:bg-foreground/70 focus-visible:opacity-100 group-hover:opacity-100 sm:left-6"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -120,7 +120,7 @@ export function HeroCarousel() {
         type="button"
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-background/30 bg-foreground/40 p-2 text-background backdrop-blur transition-colors hover:bg-foreground/70 sm:right-6"
+        className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-background/30 bg-foreground/40 p-2 text-background opacity-0 backdrop-blur transition-all duration-300 hover:bg-foreground/70 focus-visible:opacity-100 group-hover:opacity-100 sm:right-6"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
