@@ -62,7 +62,7 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative h-[70vh] min-h-[26rem] w-full overflow-hidden bg-foreground"
+      className="group relative h-[70vh] min-h-[26rem] w-screen max-w-[100vw] overflow-hidden bg-foreground"
       aria-roledescription="carousel"
       aria-label="Pynotech Solutions highlights"
     >
