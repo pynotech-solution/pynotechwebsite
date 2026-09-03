@@ -156,7 +156,8 @@ function Index() {
                 width={1920}
                 height={1088}
                 className="rounded-2xl border border-border shadow-2xl"
-                priority="true"
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </div>
