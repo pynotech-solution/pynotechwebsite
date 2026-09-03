@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as ApproachRouteImport } from './routes/approach'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as VisionRouteImport } from './routes/vision'
 
@@ -20,14 +20,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApproachRoute = ApproachRouteImport.update({
   id: '/approach',
   path: '/approach',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -43,38 +43,38 @@ const VisionRoute = VisionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/approach': typeof ApproachRoute
-  '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/vision': typeof VisionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/approach': typeof ApproachRoute
-  '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/vision': typeof VisionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/approach': typeof ApproachRoute
-  '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/vision': typeof VisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/approach' | '/contact' | '/services' | '/vision'
+  fullPaths: '/' | '/about' | '/approach' | '/services' | '/vision'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/approach' | '/contact' | '/services' | '/vision'
-  id: '__root__' | '/' | '/approach' | '/contact' | '/services' | '/vision'
+  to: '/' | '/about' | '/approach' | '/services' | '/vision'
+  id: '__root__' | '/' | '/about' | '/approach' | '/services' | '/vision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   ApproachRoute: typeof ApproachRoute
-  ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
   VisionRoute: typeof VisionRoute
 }
@@ -88,18 +88,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/approach': {
       id: '/approach'
       path: '/approach'
       fullPath: '/approach'
       preLoaderRoute: typeof ApproachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -121,8 +121,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   ApproachRoute: ApproachRoute,
-  ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
   VisionRoute: VisionRoute,
 }

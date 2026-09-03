@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2 } from "lucide-react";
 
 import { differentiators } from "@/data/site";
+import { PageHero } from "@/components/PageHero";
 import techNetworkImage from "@/assets/tech-network.jpg";
 
 export const Route = createFileRoute("/approach")({
@@ -29,18 +30,12 @@ export const Route = createFileRoute("/approach")({
 function ApproachPage() {
   return (
     <>
-      <section className="border-b border-border bg-secondary/40 py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Our Approach
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Technology should not simply be purchased — it should be understood,
-            adapted, maintained, and where possible, built locally to solve real
-            problems.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        image={techNetworkImage}
+        eyebrow="How We Work"
+        title="Our Approach"
+        description="Technology should not simply be purchased — it should be understood, adapted, maintained, and where possible, built locally to solve real problems."
+      />
 
       <section className="relative overflow-hidden py-16 lg:py-24">
         <div className="absolute inset-0 -z-10">

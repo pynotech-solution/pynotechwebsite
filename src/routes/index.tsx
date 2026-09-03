@@ -147,7 +147,7 @@ function Index() {
             Let us help you build, secure, and grow with technology that makes sense.
           </p>
           <Link
-            to="/contact"
+            to="/about"
             className="mt-10 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
           >
             Start a Project

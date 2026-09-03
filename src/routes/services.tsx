@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 import { services } from "@/data/site";
+import { PageHero } from "@/components/PageHero";
+import heroAbstract from "@/assets/hero-abstract.jpg";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -28,19 +30,12 @@ export const Route = createFileRoute("/services")({
 function ServicesPage() {
   return (
     <>
-      <section className="border-b border-border bg-secondary/40 py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Our Core Services
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              From code to hardware, hardware to automation, and automation to
-              intelligent systems — complete technology solutions under one roof.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image={heroAbstract}
+        eyebrow="What We Do"
+        title="Our Core Services"
+        description="From code to hardware, hardware to automation, and automation to intelligent systems — complete technology solutions under one roof."
+      />
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -70,7 +65,7 @@ function ServicesPage() {
 
           <div className="mt-14 text-center">
             <Link
-              to="/contact"
+              to="/about"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
             >
               Request a service
