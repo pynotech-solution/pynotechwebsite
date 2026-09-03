@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Lightbulb, Target } from "lucide-react";
 
+import { PageHero } from "@/components/PageHero";
+import heroTech from "@/assets/hero-tech.jpg";
+
 export const Route = createFileRoute("/vision")({
   head: () => ({
     meta: [
@@ -26,17 +29,12 @@ export const Route = createFileRoute("/vision")({
 function VisionPage() {
   return (
     <>
-      <section className="border-b border-border bg-secondary/40 py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Vision & Mission
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Our culture is built around innovation, engineering, problem-solving, and
-            continuous learning.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        image={heroTech}
+        eyebrow="Where We're Going"
+        title="Vision & Mission"
+        description="Our culture is built around innovation, engineering, problem-solving, and continuous learning."
+      />
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
