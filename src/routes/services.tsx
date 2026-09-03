@@ -70,7 +70,7 @@ function ServicesPage() {
 
           <div className="mt-14 text-center">
             <Link
-              to="/contact"
+              to="/about"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
             >
               Request a service

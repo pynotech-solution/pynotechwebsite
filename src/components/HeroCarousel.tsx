@@ -41,7 +41,7 @@ const slides = [
     title: "Protect What Matters",
     description:
       "CCTV, access control, intercom, automated gates, and cybersecurity that keeps your people and data safe.",
-    to: "/contact" as const,
+    to: "/about" as const,
     cta: "Talk to Us",
   },
 ];
