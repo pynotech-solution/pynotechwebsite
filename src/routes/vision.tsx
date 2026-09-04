@@ -1,8 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Lightbulb, Target } from "lucide-react";
+import { Lightbulb, Target, Globe } from "lucide-react";
 
 import { PageHero } from "@/components/PageHero";
 import heroTech from "@/assets/hero-tech.jpg";
+import portfolioRestaurant from "@/assets/portfolio-restaurant.jpg";
+import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
+import portfolioDashboard from "@/assets/portfolio-dashboard.jpg";
+
+const portfolio = [
+  {
+    image: portfolioRestaurant,
+    title: "Restaurant Website",
+    category: "Business Website",
+    description:
+      "A modern, mobile-friendly website with menu showcase, online presence, and customer engagement features for a local restaurant.",
+  },
+  {
+    image: portfolioEcommerce,
+    title: "E-Commerce Storefront",
+    category: "Online Store",
+    description:
+      "A complete online shopping experience with product catalogs, secure checkout flow, and inventory-friendly design.",
+  },
+  {
+    image: portfolioDashboard,
+    title: "School Management Dashboard",
+    category: "Web Application",
+    description:
+      "A data-driven management dashboard with analytics, records management, and reporting tools for institutional use.",
+  },
+];
 
 export const Route = createFileRoute("/vision")({
   head: () => ({
@@ -62,6 +89,58 @@ function VisionPage() {
                 that improve productivity, efficiency, safety, and growth.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-secondary/40 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Website Portfolios
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+              A showcase of the websites and digital products we've built — real
+              solutions that help businesses and institutions grow with
+              confidence.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {portfolio.map((project) => (
+              <article
+                key={project.title}
+                className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} — ${project.category} by Pynotech Solutions`}
+                    width={1280}
+                    height={800}
+                    loading="lazy"
+                    className="aspect-[8/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-foreground/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+                      <Globe className="h-4 w-4" aria-hidden="true" />
+                      View Project
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+                    {project.category}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-card-foreground">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {project.description}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
