@@ -37,13 +37,18 @@ function Index() {
       <HeroCarousel />
 
       {/* Intro */}
-      <section className="py-20 lg:py-28">
+      <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                The Pynotech standard
+              </p>
+              <h1 className="mt-4 max-w-md text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Complete Technology Solutions Under One Roof
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+              </h1>
+            </div>
+            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground lg:pt-8">
               We operate across IT infrastructure, software development, hardware
               engineering, embedded systems, machine automation, cybersecurity,
               networking, digital services, and smart security solutions — giving
@@ -55,13 +60,16 @@ function Index() {
       </section>
 
       {/* Services preview */}
-      <section className="bg-secondary/40 py-20 lg:py-28">
+      <section className="bg-secondary/60 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <div className="flex flex-col justify-between gap-5 border-b border-border pb-8 sm:flex-row sm:items-end">
+            <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Capabilities</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Our Core Services
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            </div>
+            <p className="max-w-md text-base text-muted-foreground sm:text-right">
               From code to hardware, hardware to automation, and automation to
               intelligent systems.
             </p>
@@ -71,9 +79,9 @@ function Index() {
             {services.slice(0, 4).map((service, index) => (
               <div
                 key={service.title}
-                className="group rounded-xl border border-border bg-card p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                className="group border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <div className="flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                   <service.icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <div className="mt-4 flex items-baseline gap-2">
@@ -106,7 +114,8 @@ function Index() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why Pynotech</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
                 Why Choose Pynotech?
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
@@ -121,7 +130,7 @@ function Index() {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
-            <ul className="grid gap-4 rounded-2xl border border-border bg-card p-8 shadow-lg">
+            <ul className="grid gap-4 border-l-2 border-primary bg-card p-8 shadow-sm">
               {differentiators.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <CheckCircle2

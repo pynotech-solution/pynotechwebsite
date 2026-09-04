@@ -1,4 +1,6 @@
-import { Cpu, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+
+import logoImage from "@/assets/logoimage.jpg";
 
 const currentYear = new Date().getFullYear();
 
@@ -8,16 +10,14 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Cpu className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="text-lg font-bold tracking-tight">Pynotech</span>
-                <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-background/70">
-                  Solutions
-                </span>
-              </div>
+            <div className="inline-flex rounded-sm bg-white p-1">
+              <img
+                src={logoImage}
+                alt="Pynotech Solutions"
+                width="1024"
+                height="336"
+                className="h-11 w-auto max-w-[14rem] object-contain"
+              />
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-background/80">
               Powering Innovation. Empowering Technology. Solving Real Problems.

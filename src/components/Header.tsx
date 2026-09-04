@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Cpu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
+import logoImage from "@/assets/logoimage.jpg";
 
 const navLinks = [
   { label: "Home", to: "/" as const },
@@ -27,31 +29,19 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         solid
-          ? "bg-card/95 shadow-sm backdrop-blur-md"
+          ? "border-b border-border/70 bg-card/95 shadow-sm backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Cpu className="h-5 w-5" aria-hidden="true" />
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span
-              className={`text-lg font-bold tracking-tight ${
-                solid ? "text-foreground" : "text-background"
-              }`}
-            >
-              Pynotech
-            </span>
-            <span
-              className={`text-[0.65rem] font-semibold uppercase tracking-wider ${
-                solid ? "text-muted-foreground" : "text-background/75"
-              }`}
-            >
-              Solutions
-            </span>
-          </div>
+        <Link to="/" className="flex items-center rounded-sm bg-white p-1">
+          <img
+            src={logoImage}
+            alt="Pynotech Solutions"
+            width="1024"
+            height="336"
+            className="h-10 w-auto max-w-[12rem] object-contain sm:h-11 sm:max-w-[14rem]"
+          />
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex">
@@ -75,7 +65,7 @@ export function Header() {
           <Link
             to="/about"
             hash="contact"
-            className="ml-3 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+            className="ml-3 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
             Get in Touch
           </Link>
