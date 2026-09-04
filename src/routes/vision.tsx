@@ -1,8 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Lightbulb, Target } from "lucide-react";
+import { Lightbulb, Target, Globe } from "lucide-react";
 
 import { PageHero } from "@/components/PageHero";
 import heroTech from "@/assets/hero-tech.jpg";
+import portfolioRestaurant from "@/assets/portfolio-restaurant.jpg";
+import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
+import portfolioDashboard from "@/assets/portfolio-dashboard.jpg";
+
+const portfolio = [
+  {
+    image: portfolioRestaurant,
+    title: "Restaurant Website",
+    category: "Business Website",
+    description:
+      "A modern, mobile-friendly website with menu showcase, online presence, and customer engagement features for a local restaurant.",
+  },
+  {
+    image: portfolioEcommerce,
+    title: "E-Commerce Storefront",
+    category: "Online Store",
+    description:
+      "A complete online shopping experience with product catalogs, secure checkout flow, and inventory-friendly design.",
+  },
+  {
+    image: portfolioDashboard,
+    title: "School Management Dashboard",
+    category: "Web Application",
+    description:
+      "A data-driven management dashboard with analytics, records management, and reporting tools for institutional use.",
+  },
+];
 
 export const Route = createFileRoute("/vision")({
   head: () => ({
