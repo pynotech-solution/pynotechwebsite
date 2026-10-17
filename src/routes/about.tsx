@@ -2,11 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { PageHero } from "@/components/PageHero";
+import { TeamSection } from "@/components/TeamSection";
 import {
   aboutPillars,
   differentiators,
   ogImagePath,
-  team,
 } from "@/data/site";
 import heroTeam from "@/assets/hero-team.webp";
 
@@ -99,45 +99,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Our Team
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              The people behind Pynotech Solutions — focused on delivering reliable
-              technology for businesses and institutions.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((member) => (
-              <article key={member.name} className="border border-border bg-card">
-                <img
-                  src={member.image}
-                  alt={`${member.name}, ${member.role} at Pynotech Solutions`}
-                  width={800}
-                  height={900}
-                  loading="lazy"
-                  className="aspect-[4/5] w-full object-cover object-top"
-                />
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-card-foreground">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm font-semibold uppercase tracking-wider text-primary">
-                    {member.role}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {member.bio}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TeamSection />
 
       <section className="bg-secondary/40 py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">

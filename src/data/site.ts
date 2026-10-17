@@ -12,12 +12,10 @@ import {
 import portfolioRestaurant from "@/assets/portfolio-restaurant.webp";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.webp";
 import portfolioDashboard from "@/assets/portfolio-dashboard.webp";
-import teamYahuza from "@/assets/team-yahuza.jpg";
-import teamAlhassan from "@/assets/team-alhassan.jpg";
-import teamAdam from "@/assets/team-adam.jpg";
-import teamRidwan from "@/assets/team-ridwan.jpg";
-import teamAnim from "@/assets/team-anim.jpg";
-import teamEmmanuella from "@/assets/team-emmanuella.jpg";
+import teamYahuza from "@/assets/team/yahuza-sulley.jpeg";
+import teamAlhassan from "@/assets/team/alhassan-abudllahi-baaba.jpeg";
+import teamEmmanuel from "@/assets/team/emmanuel-asiamah-saka.jpeg";
+import teamEmmanuella from "@/assets/team/emmanuella-yawson.jpeg";
 
 export const company = {
   name: "Pynotech Solutions",
@@ -191,22 +189,10 @@ export const team = [
     image: teamAlhassan,
   },
   {
-    name: "Adam Labaran",
+    name: "Emmanuel Asiamah Saka",
     role: "Developer",
     bio: "Builds and maintains software and digital products for business and institutional clients.",
-    image: teamAdam,
-  },
-  {
-    name: "Ridwan Akyerefi Arthur",
-    role: "Developer",
-    bio: "Implements web and application features with a focus on clarity, performance, and maintainability.",
-    image: teamRidwan,
-  },
-  {
-    name: "Anim Anthony Kofi",
-    role: "Developer",
-    bio: "Drives web and app development for client projects across product and internal tools.",
-    image: teamAnim,
+    image: teamEmmanuel,
   },
   {
     name: "Emmanuella Yawson",
