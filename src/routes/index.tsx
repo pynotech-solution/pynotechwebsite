@@ -2,7 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { services, differentiators } from "@/data/site";
+import {
+  differentiators,
+  flagshipServices,
+  ogImagePath,
+} from "@/data/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,7 +29,9 @@ export const Route = createFileRoute("/")({
           "Powering Innovation. Empowering Technology. Solving Real Problems. End-to-end tech solutions for businesses and institutions in Ghana.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: ogImagePath },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: ogImagePath },
     ],
   }),
   component: Index,
@@ -36,7 +42,6 @@ function Index() {
     <>
       <HeroCarousel />
 
-      {/* Intro */}
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
@@ -44,9 +49,9 @@ function Index() {
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                 The Pynotech standard
               </p>
-              <h1 className="mt-4 max-w-md text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Complete Technology Solutions Under One Roof
-              </h1>
+              <h2 className="mt-4 max-w-md text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+                Complete Technology Solutions Under One Roof
+              </h2>
             </div>
             <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground lg:pt-8">
               We operate across IT infrastructure, software development, hardware
@@ -59,24 +64,25 @@ function Index() {
         </div>
       </section>
 
-      {/* Services preview */}
       <section className="bg-secondary/60 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-5 border-b border-border pb-8 sm:flex-row sm:items-end">
             <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Capabilities</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Our Core Services
-            </h2>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                Capabilities
+              </p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Flagship Services
+              </h2>
             </div>
             <p className="max-w-md text-base text-muted-foreground sm:text-right">
-              From code to hardware, hardware to automation, and automation to
-              intelligent systems.
+              Three areas clients ask for most — from software and networks to
+              facility security.
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2">
-            {services.slice(0, 4).map((service, index) => (
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {flagshipServices.map((service, index) => (
               <div
                 key={service.title}
                 className="group border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
@@ -91,7 +97,7 @@ function Index() {
                   </h3>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
+                  {service.blurb}
                 </p>
               </div>
             ))}
@@ -109,12 +115,13 @@ function Index() {
         </div>
       </section>
 
-      {/* Why choose us */}
       <section className="py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Why Pynotech</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                Why Pynotech
+              </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
                 Why Choose Pynotech?
               </h2>
@@ -123,7 +130,8 @@ function Index() {
                 solutions that work in the real world.
               </p>
               <Link
-                to="/approach"
+                to="/about"
+                hash="approach"
                 className="mt-8 inline-flex items-center gap-2 text-base font-semibold text-primary hover:underline"
               >
                 Learn about our approach
@@ -145,7 +153,6 @@ function Index() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="bg-secondary/40 py-20 lg:py-28">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -155,13 +162,21 @@ function Index() {
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             Let us help you build, secure, and grow with technology that makes sense.
           </p>
-          <Link
-            to="/about"
-            className="mt-10 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
-          >
-            Start a Project
-            <ArrowRight className="h-5 w-5" aria-hidden="true" />
-          </Link>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
+            >
+              Start a Project
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </Link>
+            <Link
+              to="/work"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-card px-8 py-4 text-lg font-semibold text-foreground transition-all hover:bg-accent"
+            >
+              View our work
+            </Link>
+          </div>
         </div>
       </section>
     </>

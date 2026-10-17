@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
-import { services } from "@/data/site";
+import { ogImagePath, services } from "@/data/site";
 import { PageHero } from "@/components/PageHero";
-import heroAbstract from "@/assets/hero-abstract.jpg";
+import heroAbstract from "@/assets/hero-abstract.webp";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -21,7 +21,9 @@ export const Route = createFileRoute("/services")({
           "Eight core service areas covering software, hardware, automation, networking, security, and digital growth.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: ogImagePath },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: ogImagePath },
     ],
   }),
   component: ServicesPage,
@@ -65,7 +67,7 @@ function ServicesPage() {
 
           <div className="mt-14 text-center">
             <Link
-              to="/about"
+              to="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
             >
               Request a service

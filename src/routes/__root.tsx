@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ogImagePath } from "../data/site";
 
 function NotFoundComponent() {
   return (
@@ -86,7 +87,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Pynotech Solutions" },
       { property: "og:description", content: "Powering Innovation. Empowering Technology. Solving Real Problems. Practical tech solutions for businesses and institutions in Ghana." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: ogImagePath },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: ogImagePath },
       { name: "twitter:site", content: "@PynotechSolutions" },
     ],
     links: [
@@ -124,8 +127,14 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col bg-background">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+        >
+          Skip to content
+        </a>
         <Header />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <div key={pathname} className="page-transition">
             <Outlet />
