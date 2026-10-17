@@ -62,51 +62,82 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="group relative h-[78vh] min-h-[30rem] w-screen max-w-[100vw] overflow-hidden bg-foreground"
+      className="group relative flex h-[78vh] min-h-[30rem] w-full flex-col overflow-hidden bg-foreground"
       aria-roledescription="carousel"
       aria-label="Pynotech Solutions highlights"
     >
-      {slides.map((slide, i) => (
-        <div
-          key={slide.title}
-          className={`absolute inset-0 transition-opacity duration-700 ${
-            i === index ? "opacity-100" : "pointer-events-none opacity-0"
-          }`}
-          aria-hidden={i !== index}
-        >
-          <img
-            src={slide.image}
-            alt=""
-            width={1600}
-            height={900}
-            className="h-full w-full object-cover"
-            loading={i === 0 ? "eager" : "lazy"}
-            fetchPriority={i === 0 ? "high" : "auto"}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/75 to-foreground/25" />
-          <div className="absolute inset-0 flex items-center">
-            <div className="mx-auto w-full max-w-[110rem] px-6 sm:px-10 lg:px-16">
-              <div className="max-w-2xl text-background">
-                <span className="inline-flex items-center border-l-2 border-accent pl-3 text-xs font-bold uppercase tracking-[0.18em] text-background/80">
-                  {slide.eyebrow}
-                </span>
-                <h2 className="mt-5 max-w-3xl text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-                  {slide.title}
-                </h2>
-                <p className="mt-6 max-w-xl text-base leading-relaxed text-background/80 sm:text-lg">
-                  {slide.description}
-                </p>
-                <Link
-                  to={slide.to}
-                  className="mt-7 inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
-                >
-                  {slide.cta}
-                </Link>
-              </div>
+      {/* Full-bleed media — grid stack instead of absolute layers */}
+      <div className="pointer-events-none absolute inset-0 grid" aria-hidden="true">
+        {slides.map((slide, i) => (
+          <div
+            key={slide.title}
+            className={`col-start-1 row-start-1 transition-opacity duration-700 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt=""
+              width={1600}
+              height={900}
+              className="h-full w-full object-cover"
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/75 to-foreground/25" />
+          </div>
+        ))}
+      </div>
+
+      {/* Content aligned with header: max-w-7xl + same horizontal padding */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 sm:px-6 lg:px-8">
+        <div className="grid flex-1 items-center">
+          {slides.map((slide, i) => (
+            <div
+              key={slide.title}
+              className={`col-start-1 row-start-1 max-w-2xl text-background transition-opacity duration-700 ${
+                i === index ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
+              aria-hidden={i !== index}
+            >
+              <span className="inline-flex items-center border-l-2 border-accent pl-3 text-xs font-bold uppercase tracking-[0.18em] text-background/80">
+                {slide.eyebrow}
+              </span>
+              <h2 className="mt-5 max-w-3xl text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+                {slide.title}
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-background/80 sm:text-lg">
+                {slide.description}
+              </p>
+              <Link
+                to={slide.to}
+                className="mt-7 inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
+              >
+                {slide.cta}
+              </Link>
             </div>
+          ))}
+        </div>
+
+        <div className="flex justify-center pb-5">
+          <div className="flex gap-2">
+            {slides.map((slide, i) => (
+              <button
+                key={slide.title}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === index}
+                className={`h-2 rounded-full transition-all ${
+                  i === index
+                    ? "w-8 bg-primary"
+                    : "w-2 bg-background/50 hover:bg-background/80"
+                }`}
+              />
+            ))}
           </div>
         </div>
-      ))}
+      </div>
 
       <button
         type="button"
@@ -124,21 +155,6 @@ export function HeroCarousel() {
       >
         <ChevronRight className="h-5 w-5" />
       </button>
-
-      <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-        {slides.map((slide, i) => (
-          <button
-            key={slide.title}
-            type="button"
-            onClick={() => setIndex(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            aria-current={i === index}
-            className={`h-2 rounded-full transition-all ${
-              i === index ? "w-8 bg-primary" : "w-2 bg-background/50 hover:bg-background/80"
-            }`}
-          />
-        ))}
-      </div>
     </section>
   );
 }
