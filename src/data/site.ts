@@ -189,7 +189,7 @@ export const team = [
     image: teamAlhassan,
   },
   {
-    name: "Emmanuel Asiamah Saka",
+    name: "Adam Laraban",
     role: "Developer",
     bio: "Builds and maintains software and digital products for business and institutional clients.",
     image: teamEmmanuel,
