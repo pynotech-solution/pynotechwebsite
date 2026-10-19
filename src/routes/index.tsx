@@ -68,18 +68,16 @@ function Index() {
 
       <section className="bg-secondary/60 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col justify-between gap-5 border-b border-border pb-8 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                Capabilities
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Flagship Services
-              </h2>
-            </div>
-            <p className="max-w-md text-base text-muted-foreground sm:text-right">
-              Three areas clients ask for most — from software and networks to
-              facility security.
+          <div className="border-b border-border pb-8">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+              Capabilities
+            </p>
+            <h2 className="mt-3 max-w-xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Flagship Services
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Software, infrastructure, and smart security — the three capabilities
+              clients engage us for most often.
             </p>
           </div>
 

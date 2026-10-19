@@ -90,7 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: ogImagePath },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: ogImagePath },
-      { name: "twitter:site", content: "@PynotechSolutions" },
+      { name: "twitter:site", content: "@pynotech" },
     ],
     links: [
       {

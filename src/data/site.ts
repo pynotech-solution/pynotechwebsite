@@ -7,6 +7,11 @@ import {
   LayoutGrid,
   Camera,
   TrendingUp,
+  Facebook,
+  Linkedin,
+  Youtube,
+  Instagram,
+  X,
 } from "lucide-react";
 
 import portfolioRestaurant from "@/assets/portfolio-restaurant.webp";
@@ -20,6 +25,7 @@ import logoAcuteTourism from "@/assets/clientLogos/AcuteTourismLogo.jpeg";
 import logoCampusWash from "@/assets/clientLogos/campuswashlogo.png";
 import logoStoresRadar from "@/assets/clientLogos/storesradar_logo.png";
 import logoPrimeRelief from "@/assets/clientLogos/PrimeRelif_logo.jpeg";
+import logoBuildTheRightGhana from "@/assets/clientLogos/build_the_right_ghana.png";
 
 export const company = {
   name: "Pynotech Solutions",
@@ -52,11 +58,45 @@ export const navLinks = [
   { label: "Contact", to: "/contact" as const },
 ];
 
+export const socialLinks = [
+  {
+    id: "facebook",
+    label: "Facebook",
+    href: "https://www.facebook.com/share/1Dk1v3oX4b/",
+    icon: Facebook,
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/pynotech-solutions/",
+    icon: Linkedin,
+  },
+  {
+    id: "youtube",
+    label: "YouTube",
+    href: "https://www.youtube.com/@pynotechsolutions",
+    icon: Youtube,
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/pynotech_solutions/",
+    icon: Instagram,
+  },
+  {
+    id: "x",
+    label: "X",
+    href: "https://x.com/pynotech",
+    icon: X,
+  },
+] as const;
+
 export const clients = [
   { name: "Acute Tourism", logo: logoAcuteTourism },
   { name: "Campus Wash", logo: logoCampusWash },
   { name: "StoresRadar", logo: logoStoresRadar },
   { name: "Prime Relief", logo: logoPrimeRelief },
+  { name: "Build the Right Ghana", logo: logoBuildTheRightGhana },
 ];
 
 export const services = [

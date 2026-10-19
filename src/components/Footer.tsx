@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 import logoImage from "@/assets/logo.png";
+import { SocialLinks } from "@/components/SocialLinks";
 import { company, contact, navLinks, services } from "@/data/site";
 
 const currentYear = new Date().getFullYear();
@@ -90,11 +91,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-background/10 pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-background/10 pt-8 sm:flex-row">
           <p className="text-sm text-background/70">
             © {currentYear} {company.name}. All rights reserved.
           </p>
-          <p className="text-sm text-background/70">{company.tagline}</p>
+          <SocialLinks variant="onDark" />
+          <p className="text-sm text-background/70 sm:text-right">{company.tagline}</p>
         </div>
       </div>
     </footer>

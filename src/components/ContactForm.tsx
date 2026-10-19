@@ -1,42 +1,87 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type FieldErrors } from "react-hook-form";
 
 import { contact } from "@/data/site";
-
-const needs = [
-  "Software development",
-  "IT infrastructure & networking",
-  "Smart security & automation",
-  "Machine automation / embedded",
-  "Cybersecurity",
-  "Hardware support",
-  "Digital marketing / website",
-  "Other",
-] as const;
+import {
+  contactFormSchema,
+  contactNeeds,
+  toWeb3FormsBody,
+  type ContactFormPayload,
+  type ContactFormValues,
+} from "@/lib/contact-form";
+import { cn } from "@/lib/utils";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const accessKey = import.meta.env["VITE_WEB3FORMS_ACCESS_KEY"] as string | undefined;
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+const fieldOrder = [
+  "name",
+  "email",
+  "phone",
+  "company",
+  "need",
+  "message",
+] as const;
+
 export function ContactForm() {
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [need, setNeed] = useState<(typeof needs)[number] | "">(needs[0]);
-  const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setFocus,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues, unknown, ContactFormPayload>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    defaultValues: {
+      name: "",
+      company: "",
+      email: "",
+      phone: "",
+      need: contactNeeds[0],
+      message: "",
+    },
+  });
 
+  const submitting = status === "submitting" || isSubmitting;
+
+  function onInvalid(formErrors: FieldErrors<ContactFormValues>) {
+    const firstError = fieldOrder.find((field) => formErrors[field]);
+    const message = firstError
+      ? formErrors[firstError]?.message
+      : "Please fix the highlighted fields and try again.";
+
+    setStatus("error");
+    setErrorMessage(
+      typeof message === "string"
+        ? message
+        : "Please fix the highlighted fields and try again.",
+    );
+    if (firstError) setFocus(firstError);
+  }
+
+  async function onValid(values: ContactFormPayload) {
     if (!accessKey) {
       setStatus("error");
       setErrorMessage(
         "Form is not configured yet. Please email us or use WhatsApp instead.",
       );
+      return;
+    }
+
+    const parsed = contactFormSchema.safeParse(values);
+    if (!parsed.success) {
+      const issue = parsed.error.issues[0];
+      setStatus("error");
+      setErrorMessage(issue?.message ?? "Please fix the highlighted fields and try again.");
       return;
     }
 
@@ -50,17 +95,7 @@ export function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Project inquiry from ${name}${company ? ` (${company})` : ""}`,
-          from_name: name,
-          name,
-          company: company || "—",
-          email,
-          phone: phone || "—",
-          need: need || "—",
-          message: message || "No additional details provided.",
-        }),
+        body: JSON.stringify(toWeb3FormsBody(accessKey, parsed.data)),
       });
 
       const result = (await response.json()) as { success?: boolean; message?: string };
@@ -70,12 +105,14 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setName("");
-      setCompany("");
-      setEmail("");
-      setPhone("");
-      setNeed(needs[0]);
-      setMessage("");
+      reset({
+        name: "",
+        company: "",
+        email: "",
+        phone: "",
+        need: contactNeeds[0],
+        message: "",
+      });
     } catch (error) {
       setStatus("error");
       setErrorMessage(
@@ -86,8 +123,13 @@ export function ContactForm() {
     }
   }
 
-  const fieldClass =
-    "mt-2 w-full rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60";
+  const fieldClass = (hasError: boolean) =>
+    cn(
+      "mt-2 w-full rounded-md border bg-background px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:ring-2 disabled:opacity-60",
+      hasError
+        ? "border-destructive focus:border-destructive focus:ring-destructive/20"
+        : "border-input focus:border-primary focus:ring-primary/20",
+    );
 
   if (status === "success") {
     return (
@@ -121,100 +163,149 @@ export function ContactForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onValid, onInvalid)}
       className="space-y-5 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8"
+      noValidate
     >
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="block text-sm font-medium text-foreground">
-          Full name
+        <div>
+          <label htmlFor="contact-name" className="block text-sm font-medium text-foreground">
+            Full name
+          </label>
           <input
-            required
-            name="name"
+            id="contact-name"
             autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={fieldClass}
             placeholder="Your name"
-            disabled={status === "submitting"}
+            disabled={submitting}
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={errors.name ? "contact-name-error" : undefined}
+            className={fieldClass(Boolean(errors.name))}
+            {...register("name")}
           />
-        </label>
-        <label className="block text-sm font-medium text-foreground">
-          Company
+          {errors.name && (
+            <p id="contact-name-error" className="mt-1.5 text-xs text-destructive">
+              {errors.name.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="contact-company" className="block text-sm font-medium text-foreground">
+            Company <span className="font-normal text-muted-foreground">(optional)</span>
+          </label>
           <input
-            name="company"
+            id="contact-company"
             autoComplete="organization"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className={fieldClass}
-            placeholder="Organization (optional)"
-            disabled={status === "submitting"}
+            placeholder="Organization"
+            disabled={submitting}
+            aria-invalid={errors.company ? true : undefined}
+            aria-describedby={errors.company ? "contact-company-error" : undefined}
+            className={fieldClass(Boolean(errors.company))}
+            {...register("company")}
           />
-        </label>
+          {errors.company && (
+            <p id="contact-company-error" className="mt-1.5 text-xs text-destructive">
+              {errors.company.message}
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="block text-sm font-medium text-foreground">
-          Email
+        <div>
+          <label htmlFor="contact-email" className="block text-sm font-medium text-foreground">
+            Email
+          </label>
           <input
-            required
+            id="contact-email"
             type="email"
-            name="email"
             autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={fieldClass}
             placeholder="you@company.com"
-            disabled={status === "submitting"}
+            disabled={submitting}
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby={errors.email ? "contact-email-error" : undefined}
+            className={fieldClass(Boolean(errors.email))}
+            {...register("email")}
           />
-        </label>
-        <label className="block text-sm font-medium text-foreground">
-          Phone
+          {errors.email && (
+            <p id="contact-email-error" className="mt-1.5 text-xs text-destructive">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="contact-phone" className="block text-sm font-medium text-foreground">
+            Phone <span className="font-normal text-muted-foreground">(optional)</span>
+          </label>
           <input
+            id="contact-phone"
             type="tel"
-            name="phone"
             autoComplete="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className={fieldClass}
             placeholder="0XX XXX XXXX"
-            disabled={status === "submitting"}
+            disabled={submitting}
+            aria-invalid={errors.phone ? true : undefined}
+            aria-describedby={errors.phone ? "contact-phone-error" : undefined}
+            className={fieldClass(Boolean(errors.phone))}
+            {...register("phone")}
           />
-        </label>
+          {errors.phone && (
+            <p id="contact-phone-error" className="mt-1.5 text-xs text-destructive">
+              {errors.phone.message}
+            </p>
+          )}
+        </div>
       </div>
 
-      <label className="block text-sm font-medium text-foreground">
-        What do you need help with?
+      <div>
+        <label htmlFor="contact-need" className="block text-sm font-medium text-foreground">
+          What do you need help with?
+        </label>
         <select
-          required
-          name="need"
-          value={need}
-          onChange={(e) => setNeed(e.target.value as (typeof needs)[number])}
-          className={fieldClass}
-          disabled={status === "submitting"}
+          id="contact-need"
+          disabled={submitting}
+          aria-invalid={errors.need ? true : undefined}
+          aria-describedby={errors.need ? "contact-need-error" : undefined}
+          className={fieldClass(Boolean(errors.need))}
+          {...register("need")}
         >
-          {needs.map((option) => (
+          {contactNeeds.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
           ))}
         </select>
-      </label>
+        {errors.need && (
+          <p id="contact-need-error" className="mt-1.5 text-xs text-destructive">
+            {errors.need.message}
+          </p>
+        )}
+      </div>
 
-      <label className="block text-sm font-medium text-foreground">
-        Project details
+      <div>
+        <label htmlFor="contact-message" className="block text-sm font-medium text-foreground">
+          Project details
+        </label>
         <textarea
-          name="message"
+          id="contact-message"
           rows={4}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className={fieldClass}
           placeholder="Tell us briefly about the project, timeline, or challenge."
-          disabled={status === "submitting"}
+          disabled={submitting}
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={errors.message ? "contact-message-error" : undefined}
+          className={fieldClass(Boolean(errors.message))}
+          {...register("message")}
         />
-      </label>
+        {errors.message && (
+          <p id="contact-message-error" className="mt-1.5 text-xs text-destructive">
+            {errors.message.message}
+          </p>
+        )}
+      </div>
 
       {status === "error" && (
-        <p className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+        <p
+          className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+          role="alert"
+        >
           {errorMessage}{" "}
           <a href={contact.emailHref} className="font-medium underline">
             Email us
@@ -226,10 +317,10 @@ export function ContactForm() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          disabled={status === "submitting"}
+          disabled={submitting}
           className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {status === "submitting" ? "Sending…" : "Send inquiry"}
+          {submitting ? "Sending…" : "Send inquiry"}
         </button>
         <a
           href={contact.whatsapp.href}

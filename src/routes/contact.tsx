@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react";
 
 import { ContactForm } from "@/components/ContactForm";
 import { PageHero } from "@/components/PageHero";
+import { SocialLinks } from "@/components/SocialLinks";
 import { contact, ogImagePath } from "@/data/site";
 import heroTeam from "@/assets/hero-team.webp";
 
@@ -85,6 +86,13 @@ function ContactPage() {
             >
               {contact.whatsapp.label}
             </a>
+
+            <div className="mt-8">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                Follow along
+              </p>
+              <SocialLinks variant="onLight" className="mt-3" />
+            </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {details.map((item) => (
