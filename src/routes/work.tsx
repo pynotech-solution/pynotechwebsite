@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
+import { ClientLogos } from "@/components/ClientLogos";
 import { PageHero } from "@/components/PageHero";
 import { caseStudies, ogImagePath } from "@/data/site";
 import heroAbstract from "@/assets/hero-abstract.webp";
@@ -38,6 +39,7 @@ function WorkPage() {
         title="Projects That Solve Real Problems"
         description="A look at how we turn operational needs into practical digital products — from business websites to management tools."
       />
+      <ClientLogos />
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl space-y-16 px-4 sm:px-6 lg:px-8">

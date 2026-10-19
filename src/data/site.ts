@@ -16,6 +16,10 @@ import teamYahuza from "@/assets/team/yahuza-sulley.jpeg";
 import teamAlhassan from "@/assets/team/alhassan-abudllahi-baaba.jpeg";
 import teamEmmanuel from "@/assets/team/emmanuel-asiamah-saka.jpeg";
 import teamEmmanuella from "@/assets/team/emmanuella-yawson.jpeg";
+import logoAcuteTourism from "@/assets/clientLogos/AcuteTourismLogo.jpeg";
+import logoCampusWash from "@/assets/clientLogos/campuswashlogo.png";
+import logoStoresRadar from "@/assets/clientLogos/storesradar_logo.png";
+import logoPrimeRelief from "@/assets/clientLogos/PrimeRelif_logo.jpeg";
 
 export const company = {
   name: "Pynotech Solutions",
@@ -46,6 +50,13 @@ export const navLinks = [
   { label: "Work", to: "/work" as const },
   { label: "About", to: "/about" as const },
   { label: "Contact", to: "/contact" as const },
+];
+
+export const clients = [
+  { name: "Acute Tourism", logo: logoAcuteTourism },
+  { name: "Campus Wash", logo: logoCampusWash },
+  { name: "StoresRadar", logo: logoStoresRadar },
+  { name: "Prime Relief", logo: logoPrimeRelief },
 ];
 
 export const services = [

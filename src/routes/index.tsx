@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
+import { ClientLogos } from "@/components/ClientLogos";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import {
   differentiators,
@@ -41,6 +42,7 @@ function Index() {
   return (
     <>
       <HeroCarousel />
+      <ClientLogos />
 
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
