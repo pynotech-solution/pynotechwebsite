@@ -200,21 +200,6 @@
     background-size: 14px 14px;
   }
 
-  @keyframes page-enter {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .page-transition {
-    animation: page-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
   @keyframes team-rise {
     from {
       opacity: 0;
@@ -231,7 +216,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .page-transition,
     .team-member {
       animation: none;
     }

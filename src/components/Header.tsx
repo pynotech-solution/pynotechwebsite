@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 
 import logoImage from "@/assets/logo.png";
@@ -10,6 +10,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -17,6 +18,11 @@ export function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+    setScrolled(window.scrollY > 80);
+  }, [pathname]);
 
   useEffect(() => {
     if (!isOpen) return;
