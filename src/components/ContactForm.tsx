@@ -14,6 +14,11 @@ const needs = [
   "Other",
 ] as const;
 
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const accessKey = import.meta.env["VITE_WEB3FORMS_ACCESS_KEY"] as string | undefined;
+
+type Status = "idle" | "submitting" | "success" | "error";
+
 export function ContactForm() {
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -21,43 +26,77 @@ export function ContactForm() {
   const [phone, setPhone] = useState("");
   const [need, setNeed] = useState<(typeof needs)[number] | "">(needs[0]);
   const [message, setMessage] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const subject = encodeURIComponent(
-      `Project inquiry from ${name}${company ? ` (${company})` : ""}`,
-    );
-    const body = encodeURIComponent(
-      [
-        `Name: ${name}`,
-        `Company: ${company || "—"}`,
-        `Email: ${email}`,
-        `Phone: ${phone || "—"}`,
-        `Need: ${need || "—"}`,
-        "",
-        message || "No additional details provided.",
-      ].join("\n"),
-    );
+    if (!accessKey) {
+      setStatus("error");
+      setErrorMessage(
+        "Form is not configured yet. Please email us or use WhatsApp instead.",
+      );
+      return;
+    }
 
-    setSubmitted(true);
-    window.location.href = `${contact.emailHref}?subject=${subject}&body=${body}`;
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: `Project inquiry from ${name}${company ? ` (${company})` : ""}`,
+          from_name: name,
+          name,
+          company: company || "—",
+          email,
+          phone: phone || "—",
+          need: need || "—",
+          message: message || "No additional details provided.",
+        }),
+      });
+
+      const result = (await response.json()) as { success?: boolean; message?: string };
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Something went wrong. Please try again.");
+      }
+
+      setStatus("success");
+      setName("");
+      setCompany("");
+      setEmail("");
+      setPhone("");
+      setNeed(needs[0]);
+      setMessage("");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    }
   }
 
   const fieldClass =
-    "mt-2 w-full rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20";
+    "mt-2 w-full rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60";
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="rounded-xl border border-border bg-card p-8 text-center shadow-sm">
-        <h3 className="text-xl font-semibold text-card-foreground">Opening your email app</h3>
+        <h3 className="text-xl font-semibold text-card-foreground">Message sent</h3>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          If nothing opens, email us at{" "}
-          <a href={contact.emailHref} className="font-medium text-primary hover:underline">
-            {contact.email}
-          </a>{" "}
-          or message us on WhatsApp.
+          Thanks — we received your inquiry and will respond{" "}
+          {contact.responseTime.toLowerCase()}. You can also reach us on WhatsApp if
+          it&apos;s urgent.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <a
@@ -70,10 +109,10 @@ export function ContactForm() {
           </a>
           <button
             type="button"
-            onClick={() => setSubmitted(false)}
+            onClick={() => setStatus("idle")}
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
           >
-            Edit details
+            Send another message
           </button>
         </div>
       </div>
@@ -81,7 +120,10 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8"
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-foreground">
           Full name
@@ -93,6 +135,7 @@ export function ContactForm() {
             onChange={(e) => setName(e.target.value)}
             className={fieldClass}
             placeholder="Your name"
+            disabled={status === "submitting"}
           />
         </label>
         <label className="block text-sm font-medium text-foreground">
@@ -104,6 +147,7 @@ export function ContactForm() {
             onChange={(e) => setCompany(e.target.value)}
             className={fieldClass}
             placeholder="Organization (optional)"
+            disabled={status === "submitting"}
           />
         </label>
       </div>
@@ -120,6 +164,7 @@ export function ContactForm() {
             onChange={(e) => setEmail(e.target.value)}
             className={fieldClass}
             placeholder="you@company.com"
+            disabled={status === "submitting"}
           />
         </label>
         <label className="block text-sm font-medium text-foreground">
@@ -132,6 +177,7 @@ export function ContactForm() {
             onChange={(e) => setPhone(e.target.value)}
             className={fieldClass}
             placeholder="0XX XXX XXXX"
+            disabled={status === "submitting"}
           />
         </label>
       </div>
@@ -144,6 +190,7 @@ export function ContactForm() {
           value={need}
           onChange={(e) => setNeed(e.target.value as (typeof needs)[number])}
           className={fieldClass}
+          disabled={status === "submitting"}
         >
           {needs.map((option) => (
             <option key={option} value={option}>
@@ -162,15 +209,27 @@ export function ContactForm() {
           onChange={(e) => setMessage(e.target.value)}
           className={fieldClass}
           placeholder="Tell us briefly about the project, timeline, or challenge."
+          disabled={status === "submitting"}
         />
       </label>
+
+      {status === "error" && (
+        <p className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+          {errorMessage}{" "}
+          <a href={contact.emailHref} className="font-medium underline">
+            Email us
+          </a>{" "}
+          or use WhatsApp.
+        </p>
+      )}
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+          disabled={status === "submitting"}
+          className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          Send inquiry
+          {status === "submitting" ? "Sending…" : "Send inquiry"}
         </button>
         <a
           href={contact.whatsapp.href}
